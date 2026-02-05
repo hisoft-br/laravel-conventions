@@ -15,7 +15,7 @@ it('publishes agents file for api projects', function (): void {
 
     $content = File::get(base_path('AGENTS.md'));
     expect($content)->toContain('Hisoft Conventions - Agent Rules');
-    expect($content)->toContain('Prioridade');
+    expect($content)->toContain('Priority');
 });
 
 it('publishes agents file for inertia projects', function (): void {
@@ -25,7 +25,7 @@ it('publishes agents file for inertia projects', function (): void {
 
     $content = File::get(base_path('AGENTS.md'));
     expect($content)->toContain('Hisoft Conventions - Agent Rules');
-    expect($content)->toContain('Prioridade');
+    expect($content)->toContain('Priority');
 });
 
 it('installs cursor rules file for api projects', function (): void {
