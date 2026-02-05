@@ -66,11 +66,11 @@ AGENTS.md          # Global agent rules (published to project root)
     overrides.md
 ```
 
-## IDE Integration
+## AI Tools Integration
 
-### Cursor
+### Cursor IDE
 
-If you use Cursor IDE, install the integration rule:
+Install Cursor rules to automatically load conventions when working with project files:
 
 **For API projects:**
 
@@ -86,17 +86,39 @@ php artisan hisoft:cursor --inertia
 
 This creates `.cursor/rules/hisoft.mdc` which automatically loads the conventions when working with relevant files.
 
-The publish tags also install `AGENTS.md` in the project root, providing global rules that complement the `.mdc` file.
-
 - **API**: Rules are loaded when editing PHP files (`**/*.php`)
 - **Inertia**: Rules are loaded when editing PHP or frontend files (`**/*.{php,vue,ts,tsx,js,jsx}`)
 
-Options:
-- `--api` - Install rules for API projects (PHP only)
-- `--inertia` - Install rules for Inertia projects (PHP + Vue/React)
+### GitHub Copilot
+
+Install Copilot instructions to guide AI-assisted development:
+
+**For API projects:**
+
+```bash
+php artisan hisoft:copilot --api
+```
+
+**For Inertia projects:**
+
+```bash
+php artisan hisoft:copilot --inertia
+```
+
+This creates `.github/copilot-instructions.md` which GitHub Copilot automatically reads to understand project conventions.
+
+### Shared Options
+
+Both commands support the following options:
+- `--api` - Install for API projects (PHP only)
+- `--inertia` - Install for Inertia projects (PHP + Vue/React)
 - `--force` - Overwrite existing file without confirmation
 
 If no option is provided, the command will prompt you to choose the project type.
+
+### Global Agent Rules
+
+The publish tags also install `AGENTS.md` in the project root, providing global rules that work across all AI tools.
 
 ### Other Tools
 
