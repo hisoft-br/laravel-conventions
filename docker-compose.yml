@@ -1,0 +1,7 @@
+services:
+  test:
+    image: composer:2.7
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: sh -lc "composer update && ./vendor/bin/pest"
