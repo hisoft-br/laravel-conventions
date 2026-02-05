@@ -1,0 +1,24 @@
+{
+    "name": "hisoft/laravel-conventions",
+    "description": "Engineering conventions for Laravel projects",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+      "php": "^8.2"
+    },
+    "autoload": {
+      "psr-4": {
+        "Hisoft\\Conventions\\": "src/"
+      }
+    },
+    "extra": {
+      "laravel": {
+        "providers": [
+          "Hisoft\\Conventions\\ConventionsServiceProvider"
+        ]
+      }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+  }
+  
