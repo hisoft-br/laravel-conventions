@@ -19,6 +19,8 @@ class CursorSetupCommand extends Command
      * @var string
      */
     protected $signature = 'hisoft:cursor 
+                            {--api : Install rules for API projects (PHP only)}
+                            {--inertia : Install rules for Inertia projects (PHP + Vue/React)}
                             {--force : Overwrite existing file without confirmation}';
 
     /**
@@ -31,7 +33,13 @@ class CursorSetupCommand extends Command
      */
     public function handle(): int
     {
-        $source = __DIR__ . '/../../resources/cursor/hisoft.mdc';
+        $type = $this->resolveType();
+
+        if ($type === null) {
+            return self::FAILURE;
+        }
+
+        $source = __DIR__ . "/../../resources/cursor/hisoft-{$type}.mdc";
         $target = base_path('.cursor/rules/hisoft.mdc');
 
         if (! File::exists($source)) {
@@ -51,8 +59,36 @@ class CursorSetupCommand extends Command
         File::ensureDirectoryExists(dirname($target));
         File::copy($source, $target);
 
-        $this->info('✓ Cursor rules installed at .cursor/rules/hisoft.mdc');
+        $this->info("✓ Cursor rules ({$type}) installed at .cursor/rules/hisoft.mdc");
 
         return self::SUCCESS;
+    }
+
+    /**
+     * Resolve the project type from options or prompt.
+     */
+    private function resolveType(): ?string
+    {
+        if ($this->option('api') && $this->option('inertia')) {
+            $this->error('Cannot use both --api and --inertia options.');
+
+            return null;
+        }
+
+        if ($this->option('api')) {
+            return 'api';
+        }
+
+        if ($this->option('inertia')) {
+            return 'inertia';
+        }
+
+        $choice = $this->choice(
+            'What type of project is this?',
+            ['api' => 'API (PHP only)', 'inertia' => 'Inertia (PHP + Vue/React)'],
+            'api'
+        );
+
+        return $choice;
     }
 }

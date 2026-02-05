@@ -1,5 +1,5 @@
 ---
-description: Hisoft Laravel Conventions
+description: Hisoft Laravel Conventions (API)
 globs: **/*.php
 alwaysApply: false
 ---
@@ -17,6 +17,11 @@ When working with PHP code in this project, follow the engineering conventions d
 - `.ai/upstream/exceptions.md` - Domain exception handling
 - `.ai/upstream/phpdocs.md` - PHPDoc documentation conventions
 - `.ai/upstream/static-analysis.md` - PHPStan/Larastan level 5
+
+### API Conventions (upstream)
+
+- `.ai/upstream/crud.md` - CRUD implementation guidelines
+- `.ai/upstream/resources.md` - Laravel Resources and API response patterns
 
 ### Project Rules (priority)
 

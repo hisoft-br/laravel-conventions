@@ -58,14 +58,29 @@ Publishes:
 
 If you use Cursor IDE, install the integration rule:
 
+**For API projects:**
+
 ```bash
-php artisan hisoft:cursor
+php artisan hisoft:cursor --api
 ```
 
-This creates `.cursor/rules/hisoft.mdc` which automatically loads the conventions when working with PHP files.
+**For Inertia projects:**
+
+```bash
+php artisan hisoft:cursor --inertia
+```
+
+This creates `.cursor/rules/hisoft.mdc` which automatically loads the conventions when working with relevant files.
+
+- **API**: Rules are loaded when editing PHP files (`**/*.php`)
+- **Inertia**: Rules are loaded when editing PHP or frontend files (`**/*.{php,vue,ts,tsx,js,jsx}`)
 
 Options:
+- `--api` - Install rules for API projects (PHP only)
+- `--inertia` - Install rules for Inertia projects (PHP + Vue/React)
 - `--force` - Overwrite existing file without confirmation
+
+If no option is provided, the command will prompt you to choose the project type.
 
 ### Other Tools
 
