@@ -1,6 +1,19 @@
 # Laravel Conventions
 
-Engineering conventions for Laravel projects, designed to ensure consistency, scalability, testability, and effective AI-assisted development.
+Engineering conventions for Laravel projects, designed to enforce a professional architecture, faster refactors, and AI-assisted development that stays on-rails.
+
+## What This Enables
+
+- Consistent structure across teams and projects
+- Refactors that are predictable, safe, and fast
+- Clean separation of concerns (Actions, Requests, Resources)
+- Strong testing posture with clear boundaries
+- AI outputs aligned with your standards, not random guesses
+
+## Refactor Impact (Example)
+
+Before: mixed responsibilities in controllers, implicit rules, inconsistent naming.  
+After: Actions own business logic, Requests handle validation, Resources define API shape, and naming stays in English across the stack.
 
 ## Installation
 
