@@ -52,6 +52,25 @@ Publishes:
     overrides.md
 ```
 
+## IDE Integration
+
+### Cursor
+
+If you use Cursor IDE, install the integration rule:
+
+```bash
+php artisan hisoft:cursor
+```
+
+This creates `.cursor/rules/hisoft.mdc` which automatically loads the conventions when working with PHP files.
+
+Options:
+- `--force` - Overwrite existing file without confirmation
+
+### Other Tools
+
+The conventions in `.ai/` are compatible with any AI-assisted development tool. Reference the files in your tool's context as needed.
+
 ## Priority Order
 
 When conventions conflict:

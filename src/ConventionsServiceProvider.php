@@ -2,35 +2,44 @@
 
 namespace Hisoft\Conventions;
 
+use Hisoft\Conventions\Commands\CursorSetupCommand;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
 
 /**
- * Service Provider para publicação de convenções de engenharia.
+ * Service Provider for publishing engineering conventions.
  *
- * Este provider registra arquivos de convenções que são publicados
- * em `.ai/upstream` (arquivos do pacote, não editáveis) e
- * `.ai/local` (sobrescritas específicas do projeto).
+ * This provider registers convention files that are published
+ * to `.ai/upstream` (package files, do not edit) and
+ * `.ai/local` (project-specific overrides).
  *
- * Suporta dois tipos de projeto:
+ * Supports two types of projects:
  * - API: `php artisan vendor:publish --tag=hisoft-api`
  * - Inertia: `php artisan vendor:publish --tag=hisoft-inertia`
+ *
+ * Optionally, for Cursor IDE integration:
+ * - `php artisan hisoft:cursor`
  *
  * @package Hisoft\Conventions
  */
 class ConventionsServiceProvider extends ServiceProvider
 {
     /**
-     * Publica os arquivos de convenções para o projeto.
+     * Publishes convention files to the project.
      *
-     * Arquivos são separados em:
-     * - shared/: convenções compartilhadas (ambos os tipos)
-     * - api/: convenções exclusivas para projetos API
-     * - inertia/: convenções exclusivas para projetos Inertia
-     * - local/: sobrescritas específicas do projeto (editáveis)
+     * Files are separated into:
+     * - shared/: shared conventions (both types)
+     * - api/: API-specific conventions
+     * - inertia/: Inertia-specific conventions
+     * - local/: project-specific overrides (editable)
      */
     public function boot(): void
     {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                CursorSetupCommand::class,
+            ]);
+        }
         $basePath = __DIR__ . '/../resources/ai';
         $sharedPath = $basePath . '/shared';
         $apiPath = $basePath . '/api';
@@ -40,13 +49,13 @@ class ConventionsServiceProvider extends ServiceProvider
         $upstreamTarget = base_path('.ai/upstream');
         $localTarget = base_path('.ai/local');
 
-        // Tag para projetos API (shared + api + local)
+        // Tag for API projects (shared + api + local)
         $this->publishes(
             $this->buildPublishArray($sharedPath, $apiPath, $localPath, $upstreamTarget, $localTarget),
             'hisoft-api'
         );
 
-        // Tag para projetos Inertia (shared + inertia + local)
+        // Tag for Inertia projects (shared + inertia + local)
         $this->publishes(
             $this->buildPublishArray($sharedPath, $inertiaPath, $localPath, $upstreamTarget, $localTarget),
             'hisoft-inertia'
@@ -54,14 +63,14 @@ class ConventionsServiceProvider extends ServiceProvider
     }
 
     /**
-     * Constrói o array de publicação para uma combinação de pastas.
+     * Builds the publish array for a combination of folders.
      *
-     * @param string $sharedPath Caminho para convenções compartilhadas
-     * @param string $typePath Caminho para convenções específicas do tipo (api ou inertia)
-     * @param string $localPath Caminho para sobrescritas locais
-     * @param string $upstreamTarget Destino para arquivos upstream
-     * @param string $localTarget Destino para arquivos locais
-     * @return array<string, string> Mapeamento de origem para destino
+     * @param string $sharedPath Path to shared conventions
+     * @param string $typePath Path to type-specific conventions (api or inertia)
+     * @param string $localPath Path to local overrides
+     * @param string $upstreamTarget Target for upstream files
+     * @param string $localTarget Target for local files
+     * @return array<string, string> Source to destination mapping
      */
     private function buildPublishArray(
         string $sharedPath,
@@ -72,26 +81,26 @@ class ConventionsServiceProvider extends ServiceProvider
     ): array {
         $publishes = [];
 
-        // Adiciona arquivos compartilhados
+        // Add shared files
         $this->addFilesToPublish($publishes, $sharedPath, $upstreamTarget);
 
-        // Adiciona arquivos específicos do tipo (api ou inertia)
+        // Add type-specific files (api or inertia)
         if (File::isDirectory($typePath)) {
             $this->addFilesToPublish($publishes, $typePath, $upstreamTarget);
         }
 
-        // Adiciona arquivos locais
+        // Add local files
         $this->addFilesToPublish($publishes, $localPath, $localTarget);
 
         return $publishes;
     }
 
     /**
-     * Adiciona arquivos de um diretório ao array de publicação.
+     * Adds files from a directory to the publish array.
      *
-     * @param array<string, string> $publishes Array de publicação (por referência)
-     * @param string $sourcePath Caminho de origem
-     * @param string $targetPath Caminho de destino
+     * @param array<string, string> $publishes Publish array (by reference)
+     * @param string $sourcePath Source path
+     * @param string $targetPath Target path
      */
     private function addFilesToPublish(array &$publishes, string $sourcePath, string $targetPath): void
     {

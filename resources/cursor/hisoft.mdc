@@ -1,0 +1,36 @@
+---
+description: Hisoft Laravel Conventions
+globs: **/*.php
+alwaysApply: false
+---
+
+# Hisoft Conventions
+
+When working with PHP code in this project, follow the engineering conventions defined in the files below.
+
+## Reference Files
+
+### Base Conventions (upstream)
+
+- `.ai/upstream/conventions.md` - Architecture and layer responsibilities
+- `.ai/upstream/testing.md` - Testing strategy with Pest
+- `.ai/upstream/exceptions.md` - Domain exception handling
+- `.ai/upstream/phpdocs.md` - PHPDoc documentation conventions
+- `.ai/upstream/static-analysis.md` - PHPStan/Larastan level 5
+
+### Project Rules (priority)
+
+- `.ai/local/overrides.md` - Project-specific rules
+
+## Priority
+
+1. Rules in `.ai/local/*` override `.ai/upstream/*`
+2. Always consult relevant files before generating code
+
+## Core Principles
+
+- Controllers are thin — all logic in Actions
+- Actions never return HTTP responses
+- Actions throw domain exceptions
+- Requests validate and expose typed getters
+- API responses use Resources
