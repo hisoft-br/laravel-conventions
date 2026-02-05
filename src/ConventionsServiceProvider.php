@@ -2,6 +2,7 @@
 
 namespace Hisoft\Conventions;
 
+use Hisoft\Conventions\Commands\CopilotSetupCommand;
 use Hisoft\Conventions\Commands\CursorSetupCommand;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
@@ -17,8 +18,9 @@ use Illuminate\Support\ServiceProvider;
  * - API: `php artisan vendor:publish --tag=hisoft-api`
  * - Inertia: `php artisan vendor:publish --tag=hisoft-inertia`
  *
- * Optionally, for Cursor IDE integration:
- * - `php artisan hisoft:cursor`
+ * Optionally, for IDE integration:
+ * - `php artisan hisoft:cursor` (Cursor IDE)
+ * - `php artisan hisoft:copilot` (GitHub Copilot)
  *
  * @package Hisoft\Conventions
  */
@@ -37,6 +39,7 @@ class ConventionsServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
+                CopilotSetupCommand::class,
                 CursorSetupCommand::class,
             ]);
         }
