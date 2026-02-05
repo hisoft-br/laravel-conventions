@@ -5,6 +5,27 @@ use Illuminate\Support\Facades\File;
 
 beforeEach(function (): void {
     File::deleteDirectory(base_path('.cursor'));
+    File::delete(base_path('AGENTS.md'));
+});
+
+it('publishes agents file for api projects', function (): void {
+    Artisan::call('vendor:publish', ['--tag' => 'hisoft-api']);
+
+    expect(base_path('AGENTS.md'))->toBeFile();
+
+    $content = File::get(base_path('AGENTS.md'));
+    expect($content)->toContain('Hisoft Conventions - Agent Rules');
+    expect($content)->toContain('Prioridade');
+});
+
+it('publishes agents file for inertia projects', function (): void {
+    Artisan::call('vendor:publish', ['--tag' => 'hisoft-inertia']);
+
+    expect(base_path('AGENTS.md'))->toBeFile();
+
+    $content = File::get(base_path('AGENTS.md'));
+    expect($content)->toContain('Hisoft Conventions - Agent Rules');
+    expect($content)->toContain('Prioridade');
 });
 
 it('installs cursor rules file for api projects', function (): void {

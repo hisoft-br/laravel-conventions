@@ -39,6 +39,7 @@ Publishes:
 ## Published Structure
 
 ```
+AGENTS.md          # Global agent rules (published to project root)
 .ai/
   upstream/          # Package conventions (do not edit)
     conventions.md
@@ -71,6 +72,8 @@ php artisan hisoft:cursor --inertia
 ```
 
 This creates `.cursor/rules/hisoft.mdc` which automatically loads the conventions when working with relevant files.
+
+The publish tags also install `AGENTS.md` in the project root, providing global rules that complement the `.mdc` file.
 
 - **API**: Rules are loaded when editing PHP files (`**/*.php`)
 - **Inertia**: Rules are loaded when editing PHP or frontend files (`**/*.{php,vue,ts,tsx,js,jsx}`)

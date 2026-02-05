@@ -19,6 +19,7 @@ AI-assisted development.
 - Requests expose typed getters.
 - All API responses use Laravel Resources.
 - Models represent persistence, not behavior orchestration.
+- Method names, database columns, tables, and variables are named in English.
 
 ---
 

@@ -45,21 +45,36 @@ class ConventionsServiceProvider extends ServiceProvider
         $apiPath = $basePath . '/api';
         $inertiaPath = $basePath . '/inertia';
         $localPath = $basePath . '/local';
+        $agentsPath = __DIR__ . '/../AGENTS.md';
 
         $upstreamTarget = base_path('.ai/upstream');
         $localTarget = base_path('.ai/local');
 
         // Tag for API projects (shared + api + local)
-        $this->publishes(
-            $this->buildPublishArray($sharedPath, $apiPath, $localPath, $upstreamTarget, $localTarget),
-            'hisoft-api'
+        $apiPublishes = $this->buildPublishArray(
+            $sharedPath,
+            $apiPath,
+            $localPath,
+            $upstreamTarget,
+            $localTarget
         );
+        if (File::exists($agentsPath)) {
+            $apiPublishes[$agentsPath] = base_path('AGENTS.md');
+        }
+        $this->publishes($apiPublishes, 'hisoft-api');
 
         // Tag for Inertia projects (shared + inertia + local)
-        $this->publishes(
-            $this->buildPublishArray($sharedPath, $inertiaPath, $localPath, $upstreamTarget, $localTarget),
-            'hisoft-inertia'
+        $inertiaPublishes = $this->buildPublishArray(
+            $sharedPath,
+            $inertiaPath,
+            $localPath,
+            $upstreamTarget,
+            $localTarget
         );
+        if (File::exists($agentsPath)) {
+            $inertiaPublishes[$agentsPath] = base_path('AGENTS.md');
+        }
+        $this->publishes($inertiaPublishes, 'hisoft-inertia');
     }
 
     /**
