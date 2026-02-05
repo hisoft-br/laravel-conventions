@@ -7,9 +7,14 @@
       "php": "^8.2"
     },
     "require-dev": {
+      "larastan/larastan": "^2.0",
       "orchestra/testbench": "^9.0",
       "pestphp/pest": "^2.0",
       "pestphp/pest-plugin-laravel": "^2.0"
+    },
+    "scripts": {
+      "test": "pest",
+      "analyse": "phpstan analyse"
     },
     "autoload": {
       "psr-4": {

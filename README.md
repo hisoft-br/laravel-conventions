@@ -1,12 +1,105 @@
-# Project AI Conventions
+# Laravel Conventions
 
-This project follows the engineering conventions defined in `.ai/upstream`.
+Engineering conventions for Laravel projects, designed to ensure consistency, scalability, testability, and effective AI-assisted development.
 
-Upstream files are generated and must not be edited.
+## Installation
 
-If project-specific rules are required,
-they must be documented in `.ai/local/overrides.md`.
+```bash
+composer require hisoft/laravel-conventions --dev
+```
 
-Priority order:
-1. `.ai/local/*`
-2. `.ai/upstream/*`
+## Usage
+
+This package supports two types of Laravel projects:
+
+### API Projects
+
+For backend/REST API projects:
+
+```bash
+php artisan vendor:publish --tag=hisoft-api
+```
+
+Publishes:
+- Shared conventions (architecture, exceptions, testing, PHPDocs, static analysis)
+- API-specific conventions (CRUD, Resources)
+
+### Inertia Projects
+
+For modern monolith projects with Vue/React:
+
+```bash
+php artisan vendor:publish --tag=hisoft-inertia
+```
+
+Publishes:
+- Shared conventions (architecture, exceptions, testing, PHPDocs, static analysis)
+- Inertia-specific conventions (Pages, Forms, Props, Components)
+
+## Published Structure
+
+```
+.ai/
+  upstream/          # Package conventions (do not edit)
+    conventions.md
+    exceptions.md
+    testing.md
+    phpdocs.md
+    static-analysis.md
+    # API: crud.md, resources.md
+    # Inertia: pages.md, forms.md, props.md, components.md
+  local/             # Project-specific overrides (editable)
+    overrides.md
+```
+
+## Priority Order
+
+When conventions conflict:
+1. `.ai/local/*` (project-specific rules)
+2. `.ai/upstream/*` (package conventions)
+
+## Conventions Overview
+
+### Shared (both API and Inertia)
+
+| File | Description |
+|------|-------------|
+| `conventions.md` | Architectural principles and layer responsibilities |
+| `exceptions.md` | Domain exception handling patterns |
+| `testing.md` | Testing strategy with Pest |
+| `phpdocs.md` | PHPDoc conventions for code documentation |
+| `static-analysis.md` | PHPStan/Larastan level 5 conventions |
+
+### API-specific
+
+| File | Description |
+|------|-------------|
+| `crud.md` | CRUD implementation guidelines |
+| `resources.md` | Laravel Resources and API response patterns |
+
+### Inertia-specific
+
+| File | Description |
+|------|-------------|
+| `pages.md` | Page component structure and naming |
+| `forms.md` | Form handling with useForm |
+| `props.md` | Data sharing and HandleInertiaRequests |
+| `components.md` | Reusable component conventions |
+
+## Development
+
+Run tests:
+
+```bash
+docker compose run --rm test
+```
+
+Run static analysis:
+
+```bash
+composer analyse
+```
+
+## License
+
+MIT
